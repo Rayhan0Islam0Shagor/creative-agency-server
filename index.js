@@ -36,11 +36,21 @@ client.connect(err => {
             })
     });
 
-    app.post('/admin', (req, res) => {
-        const admin = req.body.email;
-        adminCollection.insertOne({ admin })
+    // add an admin
+    app.post('/addAnAdmin', (req, res) => {
+        const email = req.body.email;
+        adminCollection.insertOne({ email })
             .then(res => {
                 res.send(res.insertedCount > 0);
+            })
+    })
+
+    // for admin login
+    app.get('/isAdmin', (req, res) => {
+        const email = req.query.email;
+        adminCollection.find({ email })
+            .toArray((err, collection) => {
+                res.send(collection)
             })
     })
 
@@ -85,15 +95,15 @@ client.connect(err => {
             })
     })
 
+    // users order
     app.get('/orders', (req, res) => {
         creativityCollection.find({ email: req.query.email })
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
-    // order section
 
-    // show all service in admin panel
+    // show all service in admin table
     app.get('/allService', (req, res) => {
         creativityCollection.find({})
             .toArray((err, documents) => {
@@ -110,15 +120,14 @@ client.connect(err => {
             })
     })
 
+    // add all review in home page
     app.get('/reviews', (req, res) => {
         reviewCollection.find({})
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
-    // review section
 
 });
-
 
 app.listen(port)
