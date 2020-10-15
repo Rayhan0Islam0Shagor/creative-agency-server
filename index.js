@@ -18,7 +18,7 @@ app.use(fileUpload());
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.get('/', (req, res) => {
-    res.send('Server is ready for you. Sir!')
+    res.send('Server is working. YAY!')
 })
 
 
