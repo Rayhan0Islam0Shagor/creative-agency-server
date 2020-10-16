@@ -40,7 +40,7 @@ client.connect(err => {
     app.post('/addAnAdmin', (req, res) => {
         const email = req.body.email;
         adminCollection.insertOne({ email })
-            .then(res => {
+            .then(result => {
                 res.send(res.insertedCount > 0);
             })
     })
